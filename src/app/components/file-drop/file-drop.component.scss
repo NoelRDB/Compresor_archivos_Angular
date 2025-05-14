@@ -1,62 +1,7 @@
 @use '@angular/material' as mat;
 $primary-palette: mat.$indigo-palette;
 
-// .drop-zone {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     min-height: 180px;
-//     border: 2px dashed mat.get-color-from-palette($primary-palette);
-//     border-radius: 12px;
-//     cursor: pointer;
-//     transition: background 0.2s;
-
-//     &:hover 
-//     {
-//       background: mat.get-color-from-palette($primary-palette, 50);
-//     }
-
-//     p {
-//         margin: 0;
-//         color: rgba(0, 0, 0, 0.75); /* contraste mejor */
-//         font-size: 0.95rem;
-//       }
-    
-//       &.active {
-//         background: rgba(255, 255, 255, 0.12);
-//         p {
-//           color: rgba(255, 255, 255, 0.9);  /* un poco más fuerte mientras arrastras */
-//         }
-//       }
-
-//   }
-
-// .drop-zone {
-//     position: relative;
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//     gap: 1rem;
-//     padding: 2rem 1rem;
-  
-//     border: 2px dashed rgba(255, 255, 255, 0.6);
-//     border-radius: 1rem;
-//     transition: background 0.25s ease;
-  
-//     &.active {
-//       background: rgba(255, 255, 255, 0.07);
-//     }
-  
-//     .select-btn {
-//       pointer-events: none; /* <— evita que el botón capture el drop */
-//     }
-// }
-
-/* ============================================================
-   Alfombra de arrastre grande, clara y centrada
-   ============================================================ */
    .drop-zone {
-    /* ocupamos todo el ancho dentro de la tarjeta */
     width: 100%;
     min-height: 240px;
   
@@ -70,7 +15,7 @@ $primary-palette: mat.$indigo-palette;
     cursor: pointer;
     transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
   
-    /* efecto al arrastrar */
+
     &.active {
       border-color: #7b2ff7;
       background: rgba(123, 47, 247, 0.08);
@@ -78,19 +23,19 @@ $primary-palette: mat.$indigo-palette;
     }
   }
   
-  /* --- Contenido CENTRADO dentro de la alfombra ------------- */
+
   .helper {
-    pointer-events: none;          /* pasa el drop al contenedor */
+    pointer-events: none;          
     text-align: center;
   
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;                     /* separa icono / botón / texto */
+    gap: 1rem;                    
   }
   
   .icon {
-    font-size: 64px;               /* grande y visible */
+    font-size: 64px;               
     color: #ffffff;
     opacity: 0.85;
   }

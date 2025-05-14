@@ -14,17 +14,16 @@
       .zip
     </button>
   </div>
-<!-- Drop area ------------------------------------------------------>
+
 <div class="drop-zone"
      (dragover)="onDragOver($event)"
      (dragleave)="onDragLeave($event)"
      (drop)="onDrop($event)"
      (click)="fileInput.click()">
      
-  <!-- Inner helper: icon + button + hint --------------------------->
+
   <div class="helper">
-    <!-- Visible icon (works with base Material Icons set) -->
-    
+   
 
     <button mat-raised-button color="accent" class="select-btn">
       Seleccionar archivo <mat-icon class="icon">cloud_upload</mat-icon>
@@ -33,11 +32,11 @@
     <p class="hint">…o arrástralo aquí</p>
   </div>
 
-  <!-- Hidden real input ------------------------------------------->
+
   <input #fileInput type="file" multiple hidden (change)="handleInput($event)" />
 </div>
 
-<!-- Progress list -------------------------------------------------->
+
 <ng-container *ngIf="files().length">
   <app-progress-bar
     *ngFor="let f of files(); trackBy: trackByFn"

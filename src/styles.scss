@@ -1,4 +1,4 @@
-/*  ▶  Fondo full-screen con degradado morado  */
+
 body {
     min-height: 100vh;
     display: flex;
@@ -9,33 +9,40 @@ body {
     /* Degradado “galaxy” */
     background: linear-gradient(135deg, #7b2ff7 0%, #f107a3 100%);
     font-family: 'Inter', Roboto, Arial, sans-serif;
-    color: #ffffff;          /* texto blanco por defecto */
+    color: #ffffff;         
   }
   
-  /*  ▶  Material Card centrada  */
+  
   .main-card {
     width: min(90vw, 480px);
     padding: 2rem 2.5rem;
-    border-radius: 1.5rem;
+    // border-radius: 1.5rem;
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -15px rgba(0 0 0 / .35);
   
-    /* Glass-morphism semitransparente */
-    background: rgba(255, 255, 255, 0.15);   /* antes era 0.08, súbelo si lo ves muy claro */
+   
+    background: rgba(255, 255, 255, 0.15);   
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.20);
-    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.45);
+
   
     color: #000000;
   }
   
-  /*  ▶  Título  */
+
   .title {
+    background: linear-gradient(135deg, #7b2ff7 0%, #f107a3 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     margin: 0 0 1.5rem;
+    font-family: 'Poppins', 'Inter', sans-serif;
     font-size: clamp(1.8rem, 2.5vw + 1rem, 2.4rem);
     font-weight: 700;
     text-align: center;
   }
   
-  /*  ▶  Drop zone dentro de la tarjeta  */
+
   .drop-zone {
     position: relative;
     display: flex;
@@ -63,7 +70,7 @@ body {
     }
   }
   
-  /*  ▶  Barra de progreso visual dentro de la card */
+
   .file-row {
     margin-top: 1rem;
     display: flex;
@@ -76,5 +83,10 @@ body {
       height: 8px;
       border-radius: 4px;
     }
+  }
+
+  button.mat-raised-button {
+    transition: transform .15s;
+    &:hover { transform: translateY(-3px); }
   }
   

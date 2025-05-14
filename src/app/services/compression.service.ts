@@ -17,7 +17,7 @@ export class CompressionService {
   );
   private nextId = 0;
 
-  /** Lista reactiva de tareas */
+
   readonly tasks = signal<CompressTask[]>([]);
 
   constructor() {

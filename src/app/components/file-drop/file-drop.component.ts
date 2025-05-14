@@ -4,13 +4,14 @@ import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 import { MatButtonModule } from '@angular/material/button';
 import { CompressionService } from '../../services/compression.service';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-file-drop',
   standalone: true,
   templateUrl: './file-drop.component.html',
   styleUrls: ['./file-drop.component.scss'],
-  imports: [NgIf, NgForOf, NgClass, MatButtonModule, MatIconModule, ProgressBarComponent],
+  imports: [NgIf, NgForOf,MatButtonModule, MatIconModule, ProgressBarComponent],
 
 })
 export class FileDropComponent {
@@ -18,20 +19,20 @@ export class FileDropComponent {
   selectedFormat = signal<'zip' | 'gzip' | null>(null);
   labelText = '…o arrástralo aquí';
 
-  constructor(private compressSvc: CompressionService) {}
+  constructor(private compressSvc: CompressionService, private snack: MatSnackBar) {}
 
 
   selectFormat(fmt: 'zip' | 'gzip') {
     this.selectedFormat.set(fmt);
   }
 
-  /** Evita que el navegador abra el archivo al arrastrarlo */
+
   dragOver(evt: DragEvent) {
     evt.preventDefault();
   }
 
   onDragOver(evt: DragEvent) {
-    evt.preventDefault(); // ← ¡clave!
+    evt.preventDefault(); 
     (evt.currentTarget as HTMLElement).classList.add('active');
   }
 
@@ -54,13 +55,19 @@ export class FileDropComponent {
 
   private processFiles(files: File[]) {
     const fmt = this.selectedFormat();
-    if (!fmt) return;
-  
-    files.forEach(f => this.compressSvc.enqueue(f, fmt));
+
+    if (!fmt) {
+      this.snack.open('Seleccione la extension .gz o .zip antes de comprimir', 'Entendido', {
+        duration: 3000,
+      });
+      return;                            
+    }
+
     this.files.update(o => [...o, ...files]);
+    files.forEach(f => this.compressSvc.enqueue(f, fmt));
   }
 
-  /** Se dispara tanto desde <input> como desde drop */
+
   onFiles(evt: DragEvent | Event) {
     evt.preventDefault?.();
 
@@ -75,6 +82,6 @@ export class FileDropComponent {
     arr.forEach(f => this.compressSvc.enqueue(f));
   }
 
-  /** trackBy para el *ngFor */
+
   trackByFn = (_: number, file: File) => file.name;
 }
