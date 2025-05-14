@@ -2,17 +2,14 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./out-tsc/app",
+    "outDir": "./out-tsc/worker",
+    "lib": [
+      "es2018",
+      "webworker"
+    ],
     "types": []
   },
-  "files": [
-    "src/main.ts"
-  ],
   "include": [
-    "src/**/*.d.ts"
-  ],
-
-"target": "ES2020",
-
-"lib": ["ES2020", "DOM", "DOM.Iterable"]
+    "src/**/*.worker.ts"
+  ]
 }

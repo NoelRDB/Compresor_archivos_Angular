@@ -1,0 +1,11 @@
+<div class="file-row">
+    <span>{{ file.name }}</span>
+  
+    <ng-container *ngIf="!done() && !error()">
+      <mat-progress-bar mode="determinate" [value]="progress()"></mat-progress-bar>
+    </ng-container>
+  
+    <mat-icon color="primary" *ngIf="done()">check</mat-icon>
+    <mat-icon color="warn" *ngIf="error()">error</mat-icon>
+  </div>
+  

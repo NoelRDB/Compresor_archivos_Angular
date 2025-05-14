@@ -1,0 +1,14 @@
+.drop-zone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 180px;
+    border: 2px dashed mat.get-color-from-palette($primary-palette);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    &:hover {
+      background: mat.get-color-from-palette($primary-palette, 50);
+    }
+  }
+  

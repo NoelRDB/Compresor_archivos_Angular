@@ -1,0 +1,17 @@
+<div
+  cdkDropList
+  class="drop-zone"
+  (cdkDropListDropped)="onFiles($event)"
+  (click)="fileInput.click()"
+>
+  <p>Arrastra archivos o haz clic aquí</p>
+  <input
+    #fileInput
+    type="file"
+    multiple
+    (change)="onFiles($event)"
+    hidden
+  />
+</div>
+
+<app-progress-bar *ngFor="let f of files(); trackBy: trackByFileName" [file]="f"> </app-progress-bar>
