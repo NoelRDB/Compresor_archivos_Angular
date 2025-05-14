@@ -101,4 +101,11 @@ $primary-palette: mat.$indigo-palette;
     opacity: 0.8;
   }
   
+  .format-selector {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+  }
+  
   

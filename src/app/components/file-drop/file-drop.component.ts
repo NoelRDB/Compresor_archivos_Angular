@@ -15,9 +15,15 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class FileDropComponent {
   readonly files = signal<File[]>([]);
+  selectedFormat = signal<'zip' | 'gzip' | null>(null);
   labelText = '…o arrástralo aquí';
 
   constructor(private compressSvc: CompressionService) {}
+
+
+  selectFormat(fmt: 'zip' | 'gzip') {
+    this.selectedFormat.set(fmt);
+  }
 
   /** Evita que el navegador abra el archivo al arrastrarlo */
   dragOver(evt: DragEvent) {
@@ -47,8 +53,11 @@ export class FileDropComponent {
   }
 
   private processFiles(files: File[]) {
+    const fmt = this.selectedFormat();
+    if (!fmt) return;
+  
+    files.forEach(f => this.compressSvc.enqueue(f, fmt));
     this.files.update(o => [...o, ...files]);
-    files.forEach(f => this.compressSvc.enqueue(f));
   }
 
   /** Se dispara tanto desde <input> como desde drop */
