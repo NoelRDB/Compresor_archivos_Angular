@@ -1,17 +1,30 @@
-<div
-  cdkDropList
-  class="drop-zone"
-  (cdkDropListDropped)="onFiles($event)"
-  (click)="fileInput.click()"
->
-  <p>Arrastra archivos o haz clic aquí</p>
-  <input
-    #fileInput
-    type="file"
-    multiple
-    (change)="onFiles($event)"
-    hidden
-  />
+<!-- Drop area ------------------------------------------------------>
+<div class="drop-zone"
+     (dragover)="onDragOver($event)"
+     (dragleave)="onDragLeave($event)"
+     (drop)="onDrop($event)"
+     (click)="fileInput.click()">
+     
+  <!-- Inner helper: icon + button + hint --------------------------->
+  <div class="helper">
+    <!-- Visible icon (works with base Material Icons set) -->
+    
+
+    <button mat-raised-button color="accent" class="select-btn">
+      Seleccionar archivo <mat-icon class="icon">cloud_upload</mat-icon>
+    </button>
+
+    <p class="hint">…o arrástralo aquí</p>
+  </div>
+
+  <!-- Hidden real input ------------------------------------------->
+  <input #fileInput type="file" multiple hidden (change)="handleInput($event)" />
 </div>
 
-<app-progress-bar *ngFor="let f of files(); trackBy: trackByFileName" [file]="f"> </app-progress-bar>
+<!-- Progress list -------------------------------------------------->
+<ng-container *ngIf="files().length">
+  <app-progress-bar
+    *ngFor="let f of files(); trackBy: trackByFn"
+    [file]="f">
+  </app-progress-bar>
+</ng-container>

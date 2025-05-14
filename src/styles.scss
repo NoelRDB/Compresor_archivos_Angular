@@ -1,4 +1,80 @@
-/* You can add global styles to this file, and also import other style files */
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/*  ▶  Fondo full-screen con degradado morado  */
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+  
+    /* Degradado “galaxy” */
+    background: linear-gradient(135deg, #7b2ff7 0%, #f107a3 100%);
+    font-family: 'Inter', Roboto, Arial, sans-serif;
+    color: #ffffff;          /* texto blanco por defecto */
+  }
+  
+  /*  ▶  Material Card centrada  */
+  .main-card {
+    width: min(90vw, 480px);
+    padding: 2rem 2.5rem;
+    border-radius: 1.5rem;
+  
+    /* Glass-morphism semitransparente */
+    background: rgba(255, 255, 255, 0.15);   /* antes era 0.08, súbelo si lo ves muy claro */
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.45);
+  
+    color: #000000;
+  }
+  
+  /*  ▶  Título  */
+  .title {
+    margin: 0 0 1.5rem;
+    font-size: clamp(1.8rem, 2.5vw + 1rem, 2.4rem);
+    font-weight: 700;
+    text-align: center;
+  }
+  
+  /*  ▶  Drop zone dentro de la tarjeta  */
+  .drop-zone {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    border: 2px dashed rgba(255, 255, 255, 0.582);
+    border-radius: 1rem;
+    text-align: center;
+    transition: background 0.25s ease;
+    width: 100%;
+    max-width: 360px;    
+    margin: 0 auto; 
+  
+    p {
+      margin: 0;
+      opacity: 0.8;
+    }
+  
+    &:hover,
+    &.cdk-drop-list-dragging {
+      background: rgba(255, 255, 255, 0.05);
+    }
+  }
+  
+  /*  ▶  Barra de progreso visual dentro de la card */
+  .file-row {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    word-break: break-all;
+  
+    mat-progress-bar {
+      flex: 1;
+      height: 8px;
+      border-radius: 4px;
+    }
+  }
+  
