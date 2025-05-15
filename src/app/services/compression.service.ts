@@ -23,7 +23,6 @@ export class CompressionService {
       // actualiza barra de progreso
       this.tasks.update(ts => ts.map(t => t.id === data.id ? { ...t, ...data } : t));
 
-      // descarga segura (evitamos undefined)
       if (data.outFile) {
         saveAs(data.outFile, data.outFile.name);
       }

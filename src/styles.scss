@@ -1,116 +1,174 @@
+/* -------------------------------------------------
+   1. RESET BÁSICO
+-------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Inter', Roboto, Arial, sans-serif;
+}
+
+/* -------------------------------------------------
+   2. FONDO “GALAXY”
+-------------------------------------------------- */
 body {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
   
-    /* Degradado “galaxy” */
-    background: linear-gradient(135deg, #7b2ff7 0%, #f107a3 100%);
-    font-family: 'Inter', Roboto, Arial, sans-serif;
-    color: #ffffff;         
-  }
-  
-  
-  .main-card {
-    width: min(95vw, 960px);
-    padding: 2rem 3rem;
-    margin: 0 auto;
-    // border-radius: 1.5rem;
-    border-radius: 24px;
-    box-shadow: 0 25px 50px -15px rgba(0 0 0 / .35);
-  
-   
-    background: rgba(255, 255, 255, 0.15);   
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.20);
+  background: linear-gradient(135deg, #7b2ff7 0%, #f107a3 100%);
+  color: #ffffff;
 
-  
-    color: #000000;
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1rem;           
+}
 
-  .title {
-    background: linear-gradient(135deg, #7b2ff7 0%, #f107a3 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    margin: 0 0 1.5rem;
-    font-family: 'Poppins', 'Inter', sans-serif;
-    font-size: clamp(1.8rem, 2.5vw + 1rem, 2.4rem);
-    font-weight: 700;
-    text-align: center;
-  }
-  
+/* -------------------------------------------------
+   3. TARJETA PRINCIPAL (Glassmorphism)
+-------------------------------------------------- */
+.main-card {
+  width: min(95vw, 960px);
+  padding: 2rem 3rem;
+  margin: 0 auto;
+  border-radius: 24px;
+  box-shadow: 0 25px 50px -15px rgba(0 0 0 / .35);
 
-  .drop-zone {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem 1rem;
-    border: 2px dashed rgba(255, 255, 255, 0.582);
-    border-radius: 1rem;
-    text-align: center;
-    transition: background 0.25s ease;
-    width: 100%;
-    max-width: 360px;    
-    margin: 0 auto; 
-  
-    p {
-      margin: 0;
-      opacity: 0.8;
-    }
-  
-    &:hover,
-    &.cdk-drop-list-dragging {
-      background: rgba(255, 255, 255, 0.05);
-    }
-  }
-  
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.20);
 
-  .file-row {
-    margin-top: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    word-break: break-all;
-  
-    mat-progress-bar {
-      flex: 1;
-      height: 8px;
-      border-radius: 4px;
-    }
-  }
+  color: #000000;
 
-  button.mat-raised-button {
-    transition: transform .15s;
-    &:hover { transform: translateY(-3px); }
+  /* --- Ajustes para pantallas ≤ 700 px --- */
+  @media (max-width: 700px) {
+    padding: 1.5rem 1.5rem;
   }
-  
- /* ----- wrapper de paneles ----- */
- .panels {
+}
+
+/* -------------------------------------------------
+   4. TITULAR
+-------------------------------------------------- */
+.title {
+  background: linear-gradient(135deg, #7b2ff7 0%, #f107a3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  font-family: 'Poppins', 'Inter', sans-serif;
+  font-size: clamp(1.8rem, 2.5vw + 1rem, 2.4rem);
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 1.5rem;
+}
+
+/* -------------------------------------------------
+   5. GRID DE PANELES
+-------------------------------------------------- */
+.panels {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
   gap: 3rem;
   width: 100%;
-}
+
   
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+  @media (max-width: 400px) {
+    gap: 2rem;
+    grid-template-columns: 1fr;   
+  }
+}
+
 .panel {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-  .panel .drop-zone {
-    width: 100%;
+
+/* -------------------------------------------------
+   6. DROP-ZONE
+-------------------------------------------------- */
+.drop-zone {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+
+  padding: 2rem 1rem;
+  width: 100%;
+  max-width: 360px;
+
+  border: 2px dashed rgba(255, 255, 255, 0.58);
+  border-radius: 1rem;
+  text-align: center;
+
+  transition: background 0.25s ease, transform 0.15s ease;
+  cursor: pointer;
+
+  p {
+    margin: 0;
+    opacity: 0.8;
   }
 
-  .selector{
-  display:flex;
-  gap:1rem;
-  justify-content:center;
-  margin:1.5rem 0 2.5rem;   /* espacio debajo del título */
+  &:hover,
+  &.cdk-drop-list-dragging {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-3px);
+  }
+
+  /* --- móvil < 400 px --- */
+  @media (max-width: 400px) {
+    padding: 1.25rem 0.75rem;
+    max-width: none;
+  }
+}
+
+/* -------------------------------------------------
+   7. FILA DE ARCHIVO + PROGRESO
+-------------------------------------------------- */
+.file-row {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  word-break: break-all;
+
+  mat-progress-bar {
+    flex: 1;
+    height: 8px;
+    border-radius: 4px;
+  }
+}
+
+/* -------------------------------------------------
+   8. BOTONES
+-------------------------------------------------- */
+button.mat-raised-button {
+  transition: transform 0.15s;
+  &:hover { transform: translateY(-3px); }
+}
+
+/* -------------------------------------------------
+   9. SELECTOR .GZ / .ZIP
+-------------------------------------------------- */
+.selector,
+.format-selector {    
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin: 1.5rem 0 2.5rem;
+
+  button { min-width: 100px; }
+
+  @media (max-width: 400px) {
+    gap: 0.75rem;
+    button { flex: 1; }            /* que ocupen todo el ancho si hace falta */
+  }
 }
