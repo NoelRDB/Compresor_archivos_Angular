@@ -1,0 +1,56 @@
+@use '@angular/material' as mat;
+$primary-palette: mat.$indigo-palette;
+
+   .drop-zone {
+    width: 100%;
+    min-height: 240px;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    border: 2px dashed rgba(0, 0, 0, 0.25);
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+    transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
+  
+
+    &.active {
+      border-color: #7b2ff7;
+      background: rgba(123, 47, 247, 0.08);
+      box-shadow: 0 0 0 4px rgba(123, 47, 247, 0.15) inset;
+    }
+  }
+  
+
+  .helper {
+    pointer-events: none;          
+    text-align: center;
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;                    
+  }
+  
+  .icon {
+    font-size: 64px;               
+    color: #2196f3;
+    opacity: 0.85;
+  }
+  
+  .hint {
+    margin: 0;
+    font-size: 0.95rem;
+    opacity: 0.8;
+  }
+  
+  .format-selector {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+  }
+  
+  

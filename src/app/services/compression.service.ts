@@ -20,12 +20,14 @@ export class CompressionService {
 
   readonly tasks = signal<CompressTask[]>([]);
 
-  constructor() {
+  constructor() 
+  {
     this.worker.onmessage = ({ data }) => {
       this.tasks.update(tasks =>
         tasks.map(t => (t.id === data.id ? { ...t, ...data } : t))
       );
       if (data.done) saveAs(data.outFile, data.outFile.name);
+      if (data.outFile) saveAs(data.outFile, data.outFile.name);
     };
   }
 
@@ -34,4 +36,12 @@ export class CompressionService {
     this.tasks.update((arr: CompressTask[]) => [...arr, task]);
     this.worker.postMessage({ ...task, mode });
   }
+
+
+  // Revisar 
+  enqueueDecompress(file: File) {
+    const task: CompressTask = { id: ++this.nextId, file, progress: 0 };
+    this.tasks.update(t => [...t, task]);
+    this.worker.postMessage({ ...task, action: 'decompress' });
+  } 
 }

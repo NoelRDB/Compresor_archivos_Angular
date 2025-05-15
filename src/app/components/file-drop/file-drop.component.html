@@ -1,20 +1,3 @@
-
-<div class="format-selector">
-    <button mat-raised-button
-            [color]="selectedFormat() === 'gzip' ? 'accent' : 'disabled'"
-            (click)="selectFormat('gzip')"
-            >
-      .gz
-    </button>
-  
-    <button mat-raised-button
-            [color]="selectedFormat() === 'zip' ? 'accent' : 'disabled'"
-            (click)="selectFormat('zip')"
-            >
-      .zip
-    </button>
-  </div>
-
 <div class="drop-zone"
      (dragover)="onDragOver($event)"
      (dragleave)="onDragLeave($event)"
@@ -43,3 +26,23 @@
     [file]="f">
   </app-progress-bar>
 </ng-container>
+
+<br>
+
+<div class="format-selector">
+    <button mat-raised-button
+            [color]="selectedFormat() === 'gzip' ? 'accent' : 'disabled'"
+            (click)="selectFormat('gzip')"
+            >
+      .gz
+    </button>
+  
+    <button mat-raised-button
+            [color]="selectedFormat() === 'zip' ? 'accent' : 'disabled'"
+            (click)="selectFormat('zip')"
+            >
+      .zip
+    </button>
+</div>
+
+

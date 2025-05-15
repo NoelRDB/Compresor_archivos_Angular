@@ -14,8 +14,9 @@ body {
   
   
   .main-card {
-    width: min(90vw, 480px);
-    padding: 2rem 2.5rem;
+    width: min(95vw, 960px);
+    padding: 2rem 3rem;
+    margin: 0 auto;
     // border-radius: 1.5rem;
     border-radius: 24px;
     box-shadow: 0 25px 50px -15px rgba(0 0 0 / .35);
@@ -90,3 +91,26 @@ body {
     &:hover { transform: translateY(-3px); }
   }
   
+ /* ----- wrapper de paneles ----- */
+ .panels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 3rem;
+  width: 100%;
+}
+  
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+  .panel .drop-zone {
+    width: 100%;
+  }
+
+  .selector{
+  display:flex;
+  gap:1rem;
+  justify-content:center;
+  margin:1.5rem 0 2.5rem;   /* espacio debajo del título */
+}

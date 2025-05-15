@@ -1,0 +1,21 @@
+
+<div class="drop-zone"
+     (dragenter)="onDragEnter($event)"
+     (dragover)="onDragOver($event)"
+     (dragleave)="onDragLeave($event)"
+     (drop)="onDrop($event)"
+     (click)="fileInput.click()">
+  <div class="helper">
+    <button mat-raised-button color="primary" class="select-btn">
+      Seleccionar .zip / .gz <mat-icon class="icon">unarchive</mat-icon>
+    </button>
+    <p class="hint">…o arrástralo aquí</p>
+  </div>
+  <input #fileInput type="file" accept=".zip,.gz" hidden (change)="handleInput($event)">
+</div>
+
+<ng-container *ngIf="files().length">
+  <app-progress-bar
+    *ngFor="let f of files(); trackBy: trackBy"
+    [file]="f"></app-progress-bar>
+</ng-container>
