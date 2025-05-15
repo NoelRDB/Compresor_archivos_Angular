@@ -6,55 +6,63 @@ addEventListener('message', async ({ data }) => {
     id: number;
     file: File;
     action: 'compress' | 'decompress';
-    mode: 'gzip' | 'zip';        // solo relevante para compress
+    mode: 'gzip' | 'zip';
   };
 
   try {
-    let outFile: File;
+    /* ---------- COMPRESIÓN ---------- */
+    if (action === 'compress') {
+      let outFile: File;
 
-    if (action === 'compress') 
-    {
-      const cs = new CompressionStream('gzip');
-      const blob = await new Response(file.stream().pipeThrough(cs)).blob();
-      outFile = new File([blob], file.name + '.gz', { type: 'application/gzip' });
+      if (mode === 'gzip') {
+        const cs = new CompressionStream('gzip');
+        const blob = await new Response(file.stream().pipeThrough(cs)).blob();
+        outFile = new File([blob], file.name + '.gz', { type: 'application/gzip' });
+      } else {
+        const zip = new JSZip();
+        zip.file(file.name, await file.arrayBuffer());
+        const blob = await zip.generateAsync({ type: 'blob' }, ({ percent }) =>
+          postMessage({ id, progress: percent })
+        );
+        outFile = new File([blob], file.name + '.zip', { type: 'application/zip' });
+      }
+
       postMessage({ id, done: true, outFile });
-    }
-    
-    else 
-    { // zip
-      const zip = new JSZip();
-      zip.file(file.name, await file.arrayBuffer());
-      const blob = await zip.generateAsync({ type: 'blob' }, ({ percent }) =>
-        postMessage({ id, progress: percent })
-      );
-      outFile = new File([blob], file.name + '.zip', { type: 'application/zip' });
+      return;              // 👈 evitamos continuar
     }
 
-    // Nueva rama para descomprimir
+    /* ---------- DESCOMPRESIÓN ---------- */
     if (action === 'decompress') {
-      if (file.name.endsWith('.gz')) {
+      // --- .gz ---
+      if (/\.gz$/i.test(file.name)) {
         const ds = new DecompressionStream('gzip');
-        const blob = await new Response(
-          file.stream().pipeThrough(ds)
-        ).blob();
-        const outFile = new File([blob], file.name.replace(/\.gz$/, ''), {
+        const blob = await new Response(file.stream().pipeThrough(ds)).blob();
+        const outFile = new File([blob], file.name.replace(/\.gz$/i, ''), {
           type: 'application/octet-stream'
         });
         postMessage({ id, done: true, outFile });
-      } else if (file.name.endsWith('.zip')) {
+        return;
+      }
+
+      // --- .zip ---
+      if (/\.zip$/i.test(file.name)) {
         const zip = await JSZip.loadAsync(await file.arrayBuffer());
-        const files = Object.values(zip.files);
-        for (const zf of files) {
+        for (const zf of Object.values(zip.files)) {
           if (zf.dir) continue;
           const content = await zf.async('blob');
-          postMessage({ id, partial: true, outFile: new File([content], zf.name) });
+          postMessage({
+            id,
+            outFile: new File([content], zf.name)
+          });
         }
+        // señal de fin
         postMessage({ id, done: true });
-      } else {
-        throw new Error('Formato no soportado');
+        return;
       }
+
+      throw new Error('Formato no soportado');
     }
-  } catch (error) {
-    postMessage({ id, error: (error as Error).message });
+  } catch (err) {
+    postMessage({ id, error: (err as Error).message });
   }
 });

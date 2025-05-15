@@ -19,15 +19,8 @@
   <input #fileInput type="file" multiple hidden (change)="handleInput($event)" />
 </div>
 
-
-<ng-container *ngIf="files().length">
-  <app-progress-bar
-    *ngFor="let f of files(); trackBy: trackByFn"
-    [file]="f">
-  </app-progress-bar>
-</ng-container>
-
 <br>
+
 
 <div class="format-selector">
     <button mat-raised-button
@@ -44,5 +37,14 @@
       .zip
     </button>
 </div>
+
+<ng-container *ngIf="files().length">
+  <app-progress-bar
+    *ngFor="let f of files(); trackBy: trackByFn"
+    [file]="f">
+  </app-progress-bar>
+</ng-container>
+
+
 
 
