@@ -18,10 +18,21 @@ export class CompressionService {
   private nextId = 0;
   readonly tasks = signal<CompressTask[]>([]);
 
+  private updateTask(data: Partial<CompressTask> & { id: number }) {
+    this.tasks.update(ts => {
+      const idx = ts.findIndex(t => t.id === data.id);
+      if (idx === -1) return ts;
+      const updated = { ...ts[idx], ...data } as CompressTask;
+      const copy = ts.slice();
+      copy[idx] = updated;
+      return copy;
+    });
+  }
+
   constructor() {
     this.worker.onmessage = ({ data }) => {
-      // actualiza barra de progreso
-      this.tasks.update(ts => ts.map(t => t.id === data.id ? { ...t, ...data } : t));
+      // actualiza barra de progreso de forma más eficiente
+      this.updateTask(data);
 
       if (data.outFile) {
         saveAs(data.outFile, data.outFile.name);
