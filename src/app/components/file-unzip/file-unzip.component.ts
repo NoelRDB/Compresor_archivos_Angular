@@ -46,13 +46,14 @@ onDrop(evt: DragEvent) {
     (e.target as HTMLInputElement).value = '';
   }
 
-  private process(files: File[]) {
+  private async process(files: File[]) {
     const invalid = files.filter(f => !f.name.match(/\.(zip|gz)$/i));
     if (invalid.length) {
       this.snack.open('Solo se admiten .zip o .gz', 'OK', { duration: 3000 });
       return;
     }
 
+    await this.svc.requestOutputDirectory();
     this.files.update(o => [...o, ...files]);
     files.forEach(f => this.svc.enqueueDecompress(f));
   }
